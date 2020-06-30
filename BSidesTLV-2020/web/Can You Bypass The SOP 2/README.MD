@@ -72,7 +72,7 @@ function signIn() {
 }
 ```
 
-Something that should catch your eye pretty quickly is the second AJAX request and its use of the jsonp data type. A little background on JSONP, it is a mechanism that REST endpoints employed to bypass the same-origin policy (SOP). The same-origin policy and CORS is a security mechanism that browsers and web sites use to ensure that scripts and resources that are loaded from one origin cannot access resources from another origin. This is why if you navigated to your browser's web console while on a website and start making AJAX calls to another website on a different domain, your browser would stop you, as it would be breaching the SOP.
+Something that should catch your eye pretty quickly is the second AJAX request and its use of the jsonp data type. A little background on JSONP, it is a mechanism that REST endpoints employed to bypass the same-origin policy (SOP). The same-origin policy is a security mechanism that browsers and web sites use to ensure that scripts and resources that are loaded from one origin cannot access resources from another origin. This is why if you navigated to your browser's web console while on a website and start making AJAX calls to another website on a different domain, your browser would stop you, as it would be breaching the SOP.
 
 Some JSONP configurations allow you to define a `callback` parameter that is a function that is defined on the client side that when the request returns, it is automatically invoked and the code is executed. Navigating to the endpoint in question, we can see exactly what is happening. First by passing in `callback=i_control_this`
 ![callback example](./callback1.PNG)
