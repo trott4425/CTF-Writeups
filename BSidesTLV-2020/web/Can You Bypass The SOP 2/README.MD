@@ -39,9 +39,9 @@ HMACSHA256(
 ) 
 ```
 
-Interesting, the payload in the JWT token has a flag field. Also, the `SameSite` security flag was not set on the cookie, meaning the browser will send this cookie if the user navigates to this site from another site or if this site was encapsulated in an iframe or <img> tag src attribute. It seems likely that if we can come up with some type of XSS, the user who clicks on our link will have their credentials passed in, even if the link was not originally from the `https://can-you-bypass-the-sop.ctf.bsidestlv.com` site. 
+Interesting, the payload in the JWT token has a flag field. Also, the `SameSite` security flag was not set on the cookie, which means the site looks to be vulnerable to CSRF. It seems likely that if we can come up with some type of XSS, the user who clicks on our link will have their credentials passed in, even if the link was not originally from the `https://can-you-bypass-the-sop.ctf.bsidestlv.com` site. 
 
-Snooping some more, we find the application code in the main.js file `https://can-you-bypass-the-sop.ctf.bsidestlv.com/js/main.js`. This script file stores the JavaScript functions that are called when someone signs in or joins as a guest. The function we are particular interested in is
+Snooping some more, we find the application code in the main.js file `https://can-you-bypass-the-sop.ctf.bsidestlv.com/js/main.js`. This script file stores the JavaScript functions that are called when someone signs in or joins as a guest. The function we are particularly interested in is
 
 ```javascript
 function signIn() {
@@ -72,7 +72,7 @@ function signIn() {
 }
 ```
 
-Something that should catch your eye pretty quickly is the second AJAX request and its use of the jsonp data type. A little background on JSONP, it is a mechanism that REST endpoints employed to bypass the same origin policy (SOP). The same-origin policy is a security mechanism that browsers and web sites use to ensure that scripts and resources that are loaded from one origin cannot access resources from another origin. This is why if you navigated to your browser's web console while on a website and start making AJAX calls to another website on a different domain, your browser would stop you, as it would be breaching the SOP.
+Something that should catch your eye pretty quickly is the second AJAX request and its use of the jsonp data type. A little background on JSONP, it is a mechanism that REST endpoints employed to bypass the same-origin policy (SOP). The same-origin policy and CORS is a security mechanism that browsers and web sites use to ensure that scripts and resources that are loaded from one origin cannot access resources from another origin. This is why if you navigated to your browser's web console while on a website and start making AJAX calls to another website on a different domain, your browser would stop you, as it would be breaching the SOP.
 
 Some JSONP configurations allow you to define a `callback` parameter that is a function that is defined on the client side that when the request returns, it is automatically invoked and the code is executed. Navigating to the endpoint in question, we can see exactly what is happening. First by passing in `callback=i_control_this`
 ![callback example](./callback1.PNG)
