@@ -12,6 +12,10 @@ Well, I hate to admit this but I had a harder time with this one than I should h
 
 These all pointed to signs of the Heartbleed vulnerability, which is a bug in the OpenSSL cryptographic software libraries that was discovered in 2014. Any SSL communication that is still using these libraries may be vulnerable to the Heatbleed exploit, which allows attackers to read the memory of the server that is communicating through SSL/TLS. Of course, xkcd has a great comic that describes at a high level what an attacker is able to achieve through this bug. [Check it out here.](https://xkcd.com/1354/)
 
-From my experience on hackthebox.eu and OSCP, I know there is a nice little python script in searchsploit that allows someone to easily check for heartbleed and also reads some memory and reports back.
+From my experience on hackthebox.eu and OSCP, I know there is a nice little python script in searchsploit that allows someone to easily check for heartbleed and also reads some memory and reports it back.
 
-[Searching searchsploit](./searchsploit.PNG)
+![Searching searchsploit](./searchsploit.PNG)
+
+Running this script shows the server is indeed vulnerable to heartbleed, and after a few attempts, it shows our flag hidden in some residual memory from an HTTP request from the login form to the server.
+
+![flag](./flag.PNG)
