@@ -9,7 +9,7 @@ URL: https://reaction.ctf.bsidestlv.com/
 # Discovery
 So this one threw me initially. When you navigate to the form, you're presented with a login page. After some failed sqli attempts, I recalled the name of the challenge and was certain that it had to do with the custom reactjs code. 
 
-After some initial analysis, I noticed this code was created with Create React App. With most react stacks, a bundler is used to aggregate the client side javascript code into discrete JavaScript files that are served to the client when browser visits a webpage.
+After some initial analysis, I noticed this code was created with Create React App. With most react stacks, a bundler is used to aggregate the client side javascript code into discrete JavaScript files that are served to the client when browsers visit a webpage.
 
 Opening our developer console, we can see two JavaScript files loaded by the browser.
 
@@ -254,3 +254,4 @@ Then I'm able to call the mysterious I() function, and voila! We have our flag!
 
 ![flag](./flag.PNG)
 
+All the function was ultimately doing was calling a variation of a Rot13 cipher to our `DyAcMTImIRkJZwNlZUfkoI9BZUEsHwAuoTk5K2tkMTDmovRusD++` string which was then a base64 encoded string. It then called atob() on the output of the Rot13 function to convert the string to ascii. Pretty tricky.
